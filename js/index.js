@@ -190,3 +190,15 @@ function restartButton() {
   svar = [];
   felt.innerText = spørsmål[spørsmålsnummer].spørsmål;
 }
+
+function onLoad() {
+  const overFlowEllipsis = document.querySelector(".overflow-ellipsis");
+
+  // Fade in overFlowEllipsis
+  setTimeout(() => {
+    overFlowEllipsis.style.transition = "opacity 1s ease-in-out";
+    overFlowEllipsis.style.opacity = "1";
+  }, 250);
+
+
+}
