@@ -3,7 +3,7 @@ var spørsmål = {
       "spørsmål": "Spørsmål 1",
       "enighet": {
           "Helt enig": [ "Høyre" ],
-          "Litt enig": [ "Vemstre" ],
+          "Litt enig": [ "Venstre" ],
           "Litt uenig": [ "SV" ],
           "Helt uenig": [ "Høyre" ]
       }
@@ -17,7 +17,18 @@ var spørsmål = {
           "Litt uenig": [ "Høyre" ],
           "Helt uenig": [ "Venstre" ]
       }
+  },
+
+  2: {
+      "spørsmål": "Spørsmål 3",
+      "enighet": {
+          "Helt enig": [ "Høyre" ],
+          "Litt enig": [ "Venstre" ],
+          "Litt uenig": [ "SV" ],
+          "Helt uenig": [ "Høyre" ]
+      }
   }
+
 };
 
 const partier = [
@@ -34,7 +45,7 @@ const btn = document.getElementById("submit-btn");
 var spørsmålsnummer = 0;
 var svar = [];
 
-felt.innerHTML = spørsmål[spørsmålsnummer].spørsmål;
+felt.innerText = spørsmål[spørsmålsnummer].spørsmål;
 
 // SUBMITTION CORE
 
@@ -69,10 +80,14 @@ for (const choice of choices) {
       const container = document.querySelector(".spørsmål-container");
       const tekst = document.createElement("h1");
       tekst.setAttribute("class", "resultatTekst")
-      tekst.innerHTML = "Resultat";
+      tekst.innerText = "Resultat";
       container.appendChild(tekst);
 
-      partier
+      // SORTERING AV "partier" MED HØYEST "poeng"
+
+      partier.sort((a, b) => {
+        return b.poeng - a.poeng;
+      });
 
       // CREATE FULL PROGRESS BAR
 
@@ -82,7 +97,7 @@ for (const choice of choices) {
 
         const progressTekst = document.createElement("div");
         progressTekst.setAttribute("class", "partiTekst");
-        progressTekst.innerHTML = parti.navn;
+        progressTekst.innerText = parti.navn;
         container.appendChild(progressTekst);
 
         // CREATE PROGRESS DIV
@@ -97,9 +112,14 @@ for (const choice of choices) {
 
         const progressBar = document.createElement("div");
         progressBar.setAttribute("class", "progress-bar", "role", "progressbar", "aria-valuenow", (parti.poeng / Object.keys(spørsmål).length) * 100, "aria-valuemin", "0", "aria-valuemax", "100");
-        progressBar.style.width = (parti.poeng / Object.keys(spørsmål).length) * 100 + "%";
-        progressBar.innerHTML = (parti.poeng / Object.keys(spørsmål).length) * 100 + "%";
+        progressBar.style.width = "0%";
+        progressBar.innerText = "0%";
         progressDiv.appendChild(progressBar);
+        setTimeout(() => {
+          progressBar.style.transition = "width 1s ease-in-out";
+          progressBar.style.width = (parti.poeng / Object.keys(spørsmål).length) * 100 + "%";
+          progressBar.innerText = Number(Math.round((parti.poeng / Object.keys(spørsmål).length) * 100)) + "%";
+        }, 250);
       });
 
       // CREATE BUTTON
@@ -113,11 +133,11 @@ for (const choice of choices) {
       restartButton.style.marginRight = "auto";
       restartButton.style.marginTop = "3%";
       restartButton.style.marginBottom = "3%";
-      restartButton.innerHTML = "Start på nytt";
+      restartButton.innerText = "Start på nytt";
       container.appendChild(restartButton);
 
     } else {
-      felt.innerHTML = spørsmål[spørsmålsnummer].spørsmål;
+      felt.innerText = spørsmål[spørsmålsnummer].spørsmål;
     }
 
   }
@@ -168,5 +188,5 @@ function restartButton() {
   felt.style.display = "block";
   spørsmålsnummer = 0;
   svar = [];
-  felt.innerHTML = spørsmål[spørsmålsnummer].spørsmål;
+  felt.innerText = spørsmål[spørsmålsnummer].spørsmål;
 }
