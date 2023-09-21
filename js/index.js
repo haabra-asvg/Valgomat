@@ -1,26 +1,26 @@
 var spørsmål = {
   0: {
-      "spørsmål": "Spørsmål 1",
+      "spørsmål": "Bør Norge melde seg ut av NATO?",
       "enighet": {
-          "Helt enig": [ "Høyre", "AP", "SV" ],
-          "Litt enig": [ "Venstre", "KrF", "FrP" ],
-          "Litt uenig": [ "Rødt", "MDG" ],
-          "Helt uenig": [ "SP" ]
+          "Helt enig": [ "Rødt" ],
+          "Litt enig": [ "MDG" ],
+          "Litt uenig": [ "SV", "AP", "SP" ],
+          "Helt uenig": [ "KrF", "Venstre", "Høyre", "FrP" ]
       }
   },
 
   1: {
-      "spørsmål": "Spørsmål 2",
+      "spørsmål": "Bør Norge melde seg ut av EØS?",
       "enighet": {
-          "Helt enig": [ "SV", "FrP" ],
-          "Litt enig": [ "Venstre", "Rødt", "SP", "MDG" ],
-          "Litt uenig": [ "Høyre", "AP" ],
-          "Helt uenig": [ "KrF" ]
+          "Helt enig": [ "Rødt", "MDG" ],
+          "Litt enig": [ "SV", "SP" ],
+          "Litt uenig": [ "FrP" ],
+          "Helt uenig": [ "AP", "KrF", "Høyre" ]
       }
   },
 
   2: {
-      "spørsmål": "Spørsmål 3",
+      "spørsmål": "Bør Norge ha tvungen førstegangstjeneste?",
       "enighet": {
           "Helt enig": [ "AP", "MDG", "KrF" ],
           "Litt enig": [ "FrP", "Venstre", "SV" ],
@@ -30,13 +30,33 @@ var spørsmål = {
   },
 
   3: {
-      "spørsmål": "Spørsmål 4",
+      "spørsmål": "Bør vi øke forsvarsbudsjettet?",
       "enighet": {
           "Helt enig": [ "Høyre", "FrP" ],
-          "Litt enig": [ "Venstre", "KrF", "AP" ],
-          "Litt uenig": [ "SV", "SP", "MDG" ],
-          "Helt uenig": [ "Rødt" ]
+          "Litt enig": [ "SP", "KrF", "Venstre" ],
+          "Litt uenig": [ "MDG" ],
+          "Helt uenig": [ "Rødt", "SV", "AP" ]
       }
+  },
+
+  4: {
+    "spørsmål": "Bør Norge øke boligskatten?",
+    "enighet": {
+      "Helt enig": [ "Rødt" ],
+      "Litt enig": [ "SV", "MDG" ],
+      "Litt uenig": [ "AP", "SP", "Venstre" ],
+      "Helt uenig": [ "Høyre", "FrP" ]
+    }
+  },
+
+  5: {
+    "spørsmål": "Bør Norge øke kommunale skatter og avgifter?",
+    "enighet": {
+      "Helt enig": [ "SV", "MDG" ],
+      "Litt enig": [ "Rødt", "Venstre" ],
+      "Litt uenig": [ "AP", "SP", "KrF" ],
+      "Helt uenig": [ "Høyre", "FrP" ]
+    }
   }
 
 };
@@ -60,7 +80,6 @@ const btn = document.getElementById("submit-btn");
 
 var spørsmålsnummer = 0;
 var svar = [];
-// var svarids = [];
 
 felt.innerText = spørsmål[spørsmålsnummer].spørsmål;
 
@@ -70,24 +89,7 @@ function submitted(value) {
 
 for (const choice of choices) {
   if(choice.id == value) {
-
-    // if(svarids[spørsmålsnummer]) {
-    //   var prevchoice = document.getElementById(svarids[spørsmålsnummer]);
-    //   prevchoice.style.opacity = "1";
-    //   partier.forEach(parti => {
-    //     if(Object.keys(spørsmål[spørsmålsnummer].enighet).includes(choice.value)) {
-    //         for(let i = 0; i < spørsmål[spørsmålsnummer].enighet[choice.value].length; i++) {
-    //             if(spørsmål[spørsmålsnummer].enighet[choice.value][i] == parti.alias) {
-    //                 parti.poeng--;
-    //             }
-    //         }
-    //     }
-    //   });
-    //   svarids.splice(spørsmålsnummer, 1);
-    //   svar.splice(spørsmålsnummer, 1);
-    // }
     
-    // svarids.push(choice.id);
     svar.push(choice.value);
 
     partier.forEach(parti => {
@@ -123,67 +125,24 @@ for (const choice of choices) {
 
       // SORTERING AV "partier" MED HØYEST "poeng"
 
-      partier.sort((a, b) => {
-        return b.poeng - a.poeng;
-      });
+      sort(partier);
 
       // CREATE FULL PROGRESS BAR
 
       partier.forEach(parti => {
-
-        // CREATE PROGRESS TEXT
-
-        const progressTekst = document.createElement("div");
-        progressTekst.setAttribute("class", "partiTekst");
-        progressTekst.style.fontWeight = "bold";
-        progressTekst.style.fontSize = "22px";
-        progressTekst.style.marginBottom = "3%";
-        progressTekst.style.marginTop = "3%";
-        progressTekst.style.color = parti.partiFarge;
-        progressTekst.innerText = parti.navn;
-        container.appendChild(progressTekst);
-
-        // CREATE PROGRESS DIV
-
-        const progressDiv = document.createElement("div");
-        progressDiv.setAttribute("class", "progress");
-        progressDiv.style.width = "90%";
-        progressDiv.style.margin = "auto";
-        container.append(progressDiv);
+        createProgressText(container, parti);
+        createProgressDivBar(container, parti);
 
         // INCREASE PAGE SIZE
 
         const wrapper = document.querySelector(".wrapper");
         wrapper.style.height = "102%";
 
-        // CREATE PROGRESS BAR
-
-        const progressBar = document.createElement("div");
-        progressBar.setAttribute("class", "progress-bar", "role", "progressbar", "aria-valuenow", (parti.poeng / Object.keys(spørsmål).length) * 100, "aria-valuemin", "0", "aria-valuemax", "100");
-        progressBar.style.width = "0%";
-        progressBar.innerText = "0%";
-        progressBar.style.backgroundColor = parti.partiFarge;
-        progressDiv.appendChild(progressBar);
-        setTimeout(() => {
-          progressBar.style.transition = "width 1s ease-in-out";
-          progressBar.style.width = (parti.poeng / Object.keys(spørsmål).length) * 100 + "%";
-          progressBar.innerText = Number(Math.round((parti.poeng / Object.keys(spørsmål).length) * 100)) + "%";
-        }, 250);
       });
 
-      // CREATE BUTTON
+      // CREATE RESTART BUTTON
 
-      const restartButton = document.createElement("button");
-      restartButton.classList.add("restart");
-      restartButton.setAttribute("id", "restart-btn");
-      restartButton.setAttribute("onclick", "restartButton()");
-      restartButton.style.display = "block";
-      restartButton.style.marginLeft = "auto";
-      restartButton.style.marginRight = "auto";
-      restartButton.style.marginTop = "3%";
-      restartButton.style.marginBottom = "3%";
-      restartButton.innerText = "Start på nytt";
-      container.appendChild(restartButton);
+      createRestartButton(container);
 
     } else {
       felt.innerText = spørsmål[spørsmålsnummer].spørsmål;
@@ -256,35 +215,55 @@ function onLoad() {
 
 }
 
-// function arrowBack() {
-//   if(spørsmålsnummer > 0) {
-//     spørsmålsnummer--;
-//     felt.innerText = spørsmål[spørsmålsnummer].spørsmål;
-//     if(svarids[spørsmålsnummer]) {
-//       var choice = document.getElementById(svarids[spørsmålsnummer]);
-//       choice.style.opacity = "0.7";
-//     } else {
-//       choices.forEach(choice => {
-//         choice.style.opacity = "1";
-//       });
-//     }
-//   }
-// }
+function sort(partier) {
+  partier.sort((a, b) => {
+    return b.poeng - a.poeng;
+  });
+}
 
-// function arrowForward() {
-//   if(spørsmålsnummer < Object.keys(spørsmål).length - 1) {
-//     choices.forEach(choice => {
-//       choice.style.opacity = "1";
-//     });
-//     spørsmålsnummer++;
-//       felt.innerText = spørsmål[spørsmålsnummer].spørsmål;
-//     if(svarids[spørsmålsnummer]) {
-//       var choice = document.getElementById(svarids[spørsmålsnummer]);
-//       choice.style.opacity = "0.7";
-//     } else {
-//       choices.forEach(choice => {
-//         choice.style.opacity = "1";
-//       });
-//     }
-//   }
-// }
+function createProgressText(container, parti) {
+  const progressTekst = document.createElement("div");
+  progressTekst.setAttribute("class", "partiTekst");
+  progressTekst.style.fontWeight = "bold";
+  progressTekst.style.fontSize = "22px";
+  progressTekst.style.marginBottom = "3%";
+  progressTekst.style.marginTop = "3%";
+  progressTekst.style.color = parti.partiFarge;
+  progressTekst.innerText = parti.navn;
+  container.appendChild(progressTekst);
+}
+
+function createProgressDivBar(container, parti) {
+  const progressDiv = document.createElement("div");
+  progressDiv.setAttribute("class", "progress");
+  progressDiv.style.width = "90%";
+  progressDiv.style.margin = "auto";
+  container.append(progressDiv);
+
+  const progressBar = document.createElement("div");
+  progressBar.setAttribute("class", "progress-bar", "role", "progressbar", "aria-valuenow", (parti.poeng / Object.keys(spørsmål).length) * 100, "aria-valuemin", "0", "aria-valuemax", "100");
+  progressBar.style.width = "0%";
+  progressBar.innerText = "0%";
+  progressBar.style.backgroundColor = parti.partiFarge;
+  progressDiv.appendChild(progressBar);
+  setTimeout(() => {
+    progressBar.style.transition = "width 1s ease-in-out";
+    progressBar.style.width = (parti.poeng / Object.keys(spørsmål).length) * 100 + "%";
+    progressBar.innerText = Number(Math.round((parti.poeng / Object.keys(spørsmål).length) * 100)) + "%";
+  }, 250);
+
+}
+
+function createRestartButton(container) {
+  const restartButton = document.createElement("button");
+  restartButton.classList.add("restart");
+  restartButton.setAttribute("id", "restart-btn");
+  restartButton.setAttribute("onclick", "restartButton()");
+  restartButton.style.display = "block";
+  restartButton.style.marginLeft = "auto";
+  restartButton.style.marginRight = "auto";
+  restartButton.style.marginTop = "3%";
+  restartButton.style.marginBottom = "3%";
+  restartButton.innerText = "Start på nytt";
+  container.appendChild(restartButton);
+}
