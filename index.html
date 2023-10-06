@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valgomat Bergen 2023</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/index.css">
-    <script src="js/index.js" defer></script>
-  </head>
-<body onload="onLoad()">  
-    <div class="wrapper">
-        <div class="overflow-ellipsis">
-          <h1 class="tittel"><center>Valgomat 2023</center></h1>
-          <div class="text-center">
-            <button class="start" onclick="startButton()">Start her!</button>
-          </div>
-          <div class="valgomat-container">
-            <div class="spørsmål-container pb-3">
-              <p id="spørsmålsfelt"></p>
-              <form class="form">
-                <button id="choice4" class="choice" type="button" value="Helt uenig" onclick="submitted(this.id)">Helt uenig</button>
-                <button id="choice3" class="choice" type="button" value="Litt uenig" onclick="submitted(this.id)">Litt uenig</button>
-                <button id="choice2" class="choice" type="button" value="Litt enig" onclick="submitted(this.id)">Litt enig</button>
-                <button id="choice1" class="choice" type="button" value="Helt enig" onclick="submitted(this.id)">Helt enig</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valgomat Bergen 2023</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/index.js" defer></script>
+</head>
+
+<body onload="onLoad()">
+  <div class="wrapper">
+    <div class="overflow-ellipsis">
+      <h1 class="tittel">
+        <center>Valgomat 2023</center>
+      </h1>
+      <div class="text-center">
+        <button class="start" onclick="startButton()">Start her!</button>
       </div>
+      <div class="valgomat-container">
+        <div class="spørsmål-container pb-3">
+          <p id="spørsmålsfelt"></p>
+          <form class="form">
+            <button id="choice4" class="choice" type="button" value="Helt uenig" onclick="submitted(this.id)">Helt
+              uenig</button>
+            <button id="choice3" class="choice" type="button" value="Litt uenig" onclick="submitted(this.id)">Litt
+              uenig</button>
+            <button id="choice2" class="choice" type="button" value="Litt enig" onclick="submitted(this.id)">Litt
+              enig</button>
+            <button id="choice1" class="choice" type="button" value="Helt enig" onclick="submitted(this.id)">Helt
+              enig</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
 </body>
+
 </html>

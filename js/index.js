@@ -57,8 +57,43 @@ var spørsmål = {
       "Litt uenig": [ "AP", "SP", "KrF" ],
       "Helt uenig": [ "Høyre", "FrP" ]
     }
-  }
-
+  },
+  6: {
+    "spørsmål": "Bør Norge senke skattene?",
+    "enighet": {
+      "Helt enig": [ "FrP", "Venstre" ],
+      "Litt enig": [ "MDG", "Høyre", "KrF" ],
+      "Litt uenig": [ "AP" ],
+      "Helt uenig": [ "Rødt", "SV" ]
+    }
+  },
+  7: {
+    "spørsmål": "Bør vi innføre en universell grunninntekt?",
+    "enighet": {
+      "Helt enig": [ "Rødt", "SV" ],
+      "Litt enig": [ "MDG", "AP", "Venstre", "KrF" ],
+      "Litt uenig": [ "SP", "FrP" ],
+      "Helt uenig": [ "Høyre" ]
+    }
+  },
+  8: {
+    "spørsmål": "Bør vi satse mer på fornybar energi?",
+    "enighet": {
+      "Helt enig": [ "SV", "MDG", "SP" ],
+      "Litt enig": [ "Rødt", "AP", "Venstre", "Høyre", "FrP", "KrF" ],
+      "Litt uenig": [],
+      "Helt uenig": []
+    }
+  },
+  9: {
+    "spørsmål": "Bør vi finne nye oljefelt?",
+    "enighet": {
+      "Helt enig": [ "Høyre", "FrP", "KrF" ],
+      "Litt enig": [ "AP", "SP", "Venstre" ],
+      "Litt uenig": [ "Rødt", "MDG" ],
+      "Helt uenig": [ "SV", "MDG" ]
+    }
+  },
 };
 
 const partier = [
