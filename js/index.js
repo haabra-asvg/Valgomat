@@ -20,7 +20,7 @@ var spørsmål = {
   },
 
   2: {
-      "spørsmål": "Bør Norge ha tvungen førstegangstjeneste?",
+      "spørsmål": "Bør Norge ha allmenn verneplikt?",
       "enighet": {
           "Helt enig": [ "AP", "MDG", "KrF" ],
           "Litt enig": [ "FrP", "Venstre", "SV" ],
